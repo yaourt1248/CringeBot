@@ -36,6 +36,7 @@ import fr.cringebot.cringe.waifus.Waifu;
 import fr.cringebot.cringe.waifus.WaifuCommand;
 import fr.cringebot.cringe.xp.TextuelXp;
 import fr.cringebot.cringe.xp.XP;
+import fr.cringebot.cringe.xp.XP_textuel;
 import fr.cringebot.music.MusicCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -290,6 +291,7 @@ public class BotListener implements EventListener {
 		PollMessage.load();
 		cki.load();
 		Waifu.load();
+		XP_textuel.load();
 			for (MessageReact mr : MessageReact.message)
 				mr.refresh(event.getJDA().getGuildById("382938797442334720"));
 		new Thread(() -> {
@@ -438,6 +440,7 @@ public class BotListener implements EventListener {
 	 *
 	 */
 	private void onMessage(MessageReceivedEvent event) throws IOException, InterruptedException {
+		if (event.getAuthor().equals("881962597526696038")) return;
 		if (event.getAuthor().equals(event.getJDA().getSelfUser())) return;
 		if (!event.getGuild().getId().equals("382938797442334720")) return;
 		Message msg = event.getMessage();
@@ -450,6 +453,7 @@ public class BotListener implements EventListener {
 			return;
 		}
 		TextuelXp.addmsg(event.getMember());
+		XP_textuel.message(event.getMember());
 		if (cki.wtpThreads.containsKey(msg.getChannel().getId()))
 			new ckiListener(msg, cki.wtpThreads.get(msg.getChannel().getId()));
 
